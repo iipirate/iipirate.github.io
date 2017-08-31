@@ -397,14 +397,11 @@
 <li>我们的linux默认支持的shell可以查看“/etc/shells”文件，文件里面每行就代表一种shell。我们可以在命令行直接输入文件里面的每一行的内容，就可以切换到指定shell，输入exit，可以退出返回到我们的上一个shell中。在这个文件里面有个“/sbin/nologin”这个和“/etc/passwd”文件中的很多用户的最后很相似，第7列的意思是用户登录到linux系统中的权限，如果这里是“/sbin/nologin”那就代表不允许登录，如果是“/bin/bash”就代表登录后可以使用权限范围内的bash的所有功能，如果是类似于“/sbin/shutdown”代表这个用户只能执行“/sbin/shutdown”这条命令</li>
 </ul>
 <h2 id="Shell脚本的执行"><a href="#Shell脚本的执行" class="headerlink" title="Shell脚本的执行"></a>Shell脚本的执行</h2><ol>
-<li>赋予执行权限（x权限），直接运行，如果script.sh在root根目录。当前shell目录也在root根目录下面<br>a)  chmod 755 script.sh</li>
+<li><p>赋予执行权限（x权限），直接运行，如果script.sh在root根目录。当前shell目录也在root根目录下面<br>a)  chmod 755 script.sh<br>b)  ./script.sh<br>c)  还可以绝对路径执行　/root/ script.sh</p>
+</li>
+<li><p>通过bash调用执行脚本（推荐）<br>a)  bash script.sh<br>b)  sh scritp.sh</p>
+</li>
 </ol>
-<p>b)  ./script.sh</p>
-<p>c)  还可以绝对路径执行　/root/ script.sh</p>
-<ol>
-<li>通过bash调用执行脚本（推荐）<br>a)  bash script.sh</li>
-</ol>
-<p>b)  sh scritp.sh</p>
 <h5 id="如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“-”（可以用cat-–A-可以查看到文件的回车符），-windows的回车符号是“-M-”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个"><a href="#如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“-”（可以用cat-–A-可以查看到文件的回车符），-windows的回车符号是“-M-”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个" class="headerlink" title="如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个"></a>如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个</h5>
           
         
