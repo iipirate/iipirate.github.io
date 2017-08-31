@@ -406,8 +406,8 @@
 </li>
 </ul>
 <h2 id="Shell脚本的执行"><a href="#Shell脚本的执行" class="headerlink" title="Shell脚本的执行"></a>Shell脚本的执行</h2><ol>
-<li>赋予执行权限（x权限），直接运行，如果script.sh在root根目录。当前shell目录也在root根目录下面<br>a)  chmod 755 script.sh<br>b)  ./script.sh<br>c)  还可以绝对路径执行　/root/ script.sh</li>
-<li>通过bash调用执行脚本（推荐）<br>a)  bash script.sh<br>b)  sh scritp.sh<br><em>*</em>小知识：如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个</li>
+<li>赋予执行权限（x权限），直接运行，如果script.sh在root根目录。当前shell目录也在root根目录下面<br>a)  ‘chmod 755 script.sh’<br>b)  ‘./script.sh’<br>c)  还可以绝对路径执行　‘/root/ script.sh’</li>
+<li>通过bash调用执行脚本（推荐）<br>a)  ‘bash script.sh’<br>b)  ‘sh scritp.sh’<br>如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个</li>
 </ol>
 
           

@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="王一川的博客">
 <meta property="og:description" content="shell基础知识  shell的定义：linux shell就是我们输入命令的命令行，他的作用就是将我们输入的命令解释成内核可以识别的代码（0或1），shell可以直接调用linux系统命令，也是一门脚本语言，可以把linux的命令写成一个脚本（shell 脚本）达到自动化运维的目的，shell脚本其实就是一组命令的集合，里面也可以有判断，函数，数组，循环等功能，是一个简单的脚本编程语言。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-31T12:28:12.252Z">
+<meta property="og:updated_time" content="2017-08-31T12:31:57.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell 基础">
 <meta name="twitter:description" content="shell基础知识  shell的定义：linux shell就是我们输入命令的命令行，他的作用就是将我们输入的命令解释成内核可以识别的代码（0或1），shell可以直接调用linux系统命令，也是一门脚本语言，可以把linux的命令写成一个脚本（shell 脚本）达到自动化运维的目的，shell脚本其实就是一组命令的集合，里面也可以有判断，函数，数组，循环等功能，是一个简单的脚本编程语言。">
@@ -403,8 +403,8 @@
 </li>
 </ul>
 <h2 id="Shell脚本的执行"><a href="#Shell脚本的执行" class="headerlink" title="Shell脚本的执行"></a>Shell脚本的执行</h2><ol>
-<li>赋予执行权限（x权限），直接运行，如果script.sh在root根目录。当前shell目录也在root根目录下面<br>a)  chmod 755 script.sh<br>b)  ./script.sh<br>c)  还可以绝对路径执行　/root/ script.sh</li>
-<li>通过bash调用执行脚本（推荐）<br>a)  bash script.sh<br>b)  sh scritp.sh<br><em>*</em>小知识：如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个</li>
+<li>赋予执行权限（x权限），直接运行，如果script.sh在root根目录。当前shell目录也在root根目录下面<br>a)  ‘chmod 755 script.sh’<br>b)  ‘./script.sh’<br>c)  还可以绝对路径执行　‘/root/ script.sh’</li>
+<li>通过bash调用执行脚本（推荐）<br>a)  ‘bash script.sh’<br>b)  ‘sh scritp.sh’<br>如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个</li>
 </ol>
 
       
