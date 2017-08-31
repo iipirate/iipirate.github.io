@@ -392,13 +392,13 @@
         
           
             <h2 id="shell基础知识"><a href="#shell基础知识" class="headerlink" title="shell基础知识"></a>shell基础知识</h2><ul>
-<li>1.shell的定义：linux shell就是我们输入命令的命令行，他的作用就是将我们输入的命令解释成内核可以识别的代码（0或1），shell可以直接调用linux系统命令，也是一门脚本语言，可以把linux的命令写成一个脚本（shell 脚本）达到自动化运维的目的，shell脚本其实就是一组命令的集合，里面也可以有判断，函数，数组，循环等功能，是一个简单的脚本编程语言。</li>
-<li>2.shell 大致分为“Bourne Shell”，“C Shell”这两种shell的语法彼此不兼容，C Shell 主要在BSD版本的Unix系统中使用，语法和C语言相类似。Bourne家族主要包括sh  ksh  Bash  pah  zsh这些。C家族主要包括 csh 和tcsh。我们linux中使用的是Bourne家族中的Bash。</li>
-<li>3.我们的linux默认支持的shell可以查看“/etc/shells”文件，文件里面每行就代表一种shell。我们可以在命令行直接输入文件里面的每一行的内容，就可以切换到指定shell，输入exit，可以退出返回到我们的上一个shell中。在这个文件里面有个“/sbin/nologin”这个和“/etc/passwd”文件中的很多用户的最后很相似，第7列的意思是用户登录到linux系统中的权限，如果这里是“/sbin/nologin”那就代表不允许登录，如果是“/bin/bash”就代表登录后可以使用权限范围内的bash的所有功能，如果是类似于“/sbin/shutdown”代表这个用户只能执行“/sbin/shutdown”这条命令</li>
+<li>shell的定义：linux shell就是我们输入命令的命令行，他的作用就是将我们输入的命令解释成内核可以识别的代码（0或1），shell可以直接调用linux系统命令，也是一门脚本语言，可以把linux的命令写成一个脚本（shell 脚本）达到自动化运维的目的，shell脚本其实就是一组命令的集合，里面也可以有判断，函数，数组，循环等功能，是一个简单的脚本编程语言。</li>
+<li>shell 大致分为“Bourne Shell”，“C Shell”这两种shell的语法彼此不兼容，C Shell 主要在BSD版本的Unix系统中使用，语法和C语言相类似。Bourne家族主要包括sh  ksh  Bash  pah  zsh这些。C家族主要包括 csh 和tcsh。我们linux中使用的是Bourne家族中的Bash。</li>
+<li>我们的linux默认支持的shell可以查看“/etc/shells”文件，文件里面每行就代表一种shell。我们可以在命令行直接输入文件里面的每一行的内容，就可以切换到指定shell，输入exit，可以退出返回到我们的上一个shell中。在这个文件里面有个“/sbin/nologin”这个和“/etc/passwd”文件中的很多用户的最后很相似，第7列的意思是用户登录到linux系统中的权限，如果这里是“/sbin/nologin”那就代表不允许登录，如果是“/bin/bash”就代表登录后可以使用权限范围内的bash的所有功能，如果是类似于“/sbin/shutdown”代表这个用户只能执行“/sbin/shutdown”这条命令</li>
 </ul>
 <h2 id="Shell脚本的执行"><a href="#Shell脚本的执行" class="headerlink" title="Shell脚本的执行"></a>Shell脚本的执行</h2><ol>
 <li>赋予执行权限（x权限），直接运行，如果script.sh在root根目录。当前shell目录也在root根目录下面<br>a)  ‘chmod 755 script.sh’<br>b)  ‘./script.sh’<br>c)  还可以绝对路径执行　‘/root/ script.sh’</li>
-<li>通过bash调用执行脚本（推荐）<br>a)  ‘bash script.sh’<br>b)  ‘sh scritp.sh’<br>如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个</li>
+<li>通过bash调用执行脚本（推荐）<br>a)  ‘bash script.sh’<br>b)  ‘sh scritp.sh’<h5 id="如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“-”（可以用cat-–A-可以查看到文件的回车符），-windows的回车符号是“-M-”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个"><a href="#如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“-”（可以用cat-–A-可以查看到文件的回车符），-windows的回车符号是“-M-”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个" class="headerlink" title="如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个"></a>如果执行的脚本是用windows编辑好复制到linux来的，那么运行的时候会报错。因为两种系统的加车符号不一样。linux的回车符号是“$”（可以用cat –A 可以查看到文件的回车符）， windows的回车符号是“^M$”。这时候我们可以用工具进行转换，这个工具需要安装，dos2unix或者unix2dos分别是从windows到linux和linux到windows的转换，需要哪个装哪个</h5></li>
 </ol>
 
           
