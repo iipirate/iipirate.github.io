@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Linux有着管理各种存储设备的强大能力。Linux把所有磁盘都当作文件管理，从而简化我们对其进行的读写等操作。每个硬盘的分区命名：    IDE硬盘（以/dev/hda为例）为：        /dev/hda1        /dev/hda2        /dev/hda3 SATA或其他硬盘（以/dev/sda为例）为：     /dev/sda1     /dev/sda2     /">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="磁盘管理命令">
+<meta property="og:url" content="http://yoursite.com/2017/10/30/磁盘管理命令/index.html">
+<meta property="og:site_name" content="王一川的博客">
+<meta property="og:description" content="Linux有着管理各种存储设备的强大能力。Linux把所有磁盘都当作文件管理，从而简化我们对其进行的读写等操作。每个硬盘的分区命名：    IDE硬盘（以/dev/hda为例）为：        /dev/hda1        /dev/hda2        /dev/hda3 SATA或其他硬盘（以/dev/sda为例）为：     /dev/sda1     /dev/sda2     /">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-30T12:47:06.592Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="磁盘管理命令">
+<meta name="twitter:description" content="Linux有着管理各种存储设备的强大能力。Linux把所有磁盘都当作文件管理，从而简化我们对其进行的读写等操作。每个硬盘的分区命名：    IDE硬盘（以/dev/hda为例）为：        /dev/hda1        /dev/hda2        /dev/hda3 SATA或其他硬盘（以/dev/sda为例）为：     /dev/sda1     /dev/sda2     /">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/30/磁盘管理命令/"/>
+
+
+
+
+
+  <title>磁盘管理命令 | 王一川的博客</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王一川的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">iipirate</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/30/磁盘管理命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王一川">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王一川的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">磁盘管理命令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T20:41:35+08:00">
+                2017-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Linux有着管理各种存储设备的强大能力。Linux把所有磁盘都当作文件管理，从而简化我们对其进行的读写等操作。<br>每个硬盘的分区命名：<br>    IDE硬盘（以/dev/hda为例）为：<br>        /dev/hda1<br>        /dev/hda2<br>        /dev/hda3</p>
+<pre><code>SATA或其他硬盘（以/dev/sda为例）为：
+    /dev/sda1
+    /dev/sda2
+    /dev/sda3
+</code></pre><p>磁盘属于块设备,我们可以使用ls命令查看下服务器上所有已安装的磁盘:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@linux ~]# ls -l /dev | grep &quot;[[:space:]][h|s]&quot; | grep &quot;^b&quot;</div><div class="line">brw-rw----. 1 root disk      8,   0 Dec  3 11:10 sda</div><div class="line">brw-rw----. 1 root disk      8,   1 Dec  3 11:10 sda1</div><div class="line">brw-rw----. 1 root disk      8,   2 Dec  3 11:10 sda2</div><div class="line">brw-rw----. 1 root disk      8,  16 Dec  3 11:10 sdb</div><div class="line">brw-rw----. 1 root cdrom    11,   0 Dec  3 11:10 sr0</div></pre></td></tr></table></figure></p>
+<p>注：命令中的两个grep命令用来过滤出磁盘所在的行。</p>
+<p>说到分区，我们不得不提下MBR，MBR是mater boot recoder的简写，其存在于硬盘的0磁道0扇区，占据512B的空间（每个扇区也就512B），这512B的空间又细分如下：<br>    446B：存放boot loader，几开机引导程序；<br>    64B：存放分区信息，每条分区信息占16B的空间，所以其最多存储4条分区信息，<br>            所以每个硬盘最多能分出4个主分区或3个主分区加一个扩展分区；<br>    剩下的2B空间：是此MBR的有效性标识。</p>
+<p>通过上面的信息我们知道每个硬盘最多能分出4个主分区或3个主分区加一个扩展分区，那是不是每个硬盘最多只能分4个分区呢？<br>非也，我们可以在这四个分区中留出一个做为扩展分区，扩展分区又可以细分出多个逻辑分区。扩展分区中的逻辑分区编号只能从5开始，比如我有一块硬盘，划分出2个主分区和1个扩展分区（主分区+扩展分区数量不能超过4个），扩展分区下又有两个逻辑分区，其变号为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   Device Boot      Start         End      Blocks   Id  System</div><div class="line">/dev/sdb1               1         262     2104483+  83  Linux</div><div class="line">/dev/sdb2             263         524     2104515   83  Linux</div><div class="line">/dev/sdb3             525        1830    10490445    5  Extended</div><div class="line">/dev/sdb5             525        1178     5253223+  83  Linux</div><div class="line">/dev/sdb6            1179        1830     5237158+  83  Linux</div></pre></td></tr></table></figure></p>
+<p>但是分区是怎么划分出来的呢？<br>是通过fdisk命令：<br>使用方法：fdisk /dev/DEVICE_NAME 或者 fdisk -l<br>直接在shell中输入fdisk -l只会把所有的硬盘和分区信息输出到屏幕，可以自行测试。<br>对于fdisk /dev/DEVICE<br>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@linux ~]# fdisk /dev/sdb</div></pre></td></tr></table></figure></p>
+<p>会进入/dev/sdb的操作界面，直接在提示符处输入对应的命令按提示操作即可，当不知道怎么操作时可以输入m查看帮助：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Command (m for help): m</div><div class="line">Command action</div><div class="line">    a   toggle a bootable flag</div><div class="line">    b   edit bsd disklabel</div><div class="line">    c   toggle the dos compatibility flag</div><div class="line">    d   delete a partition</div><div class="line">    l   list known partition types</div><div class="line">    m   print this menu</div><div class="line">    n   add a new partition</div><div class="line">    o   create a new empty DOS partition table</div><div class="line">    p   print the partition table</div><div class="line">    q   quit without saving changes</div><div class="line">    s   create a new empty Sun disklabel</div><div class="line">    t   change a partition&apos;s system id</div><div class="line">    u   change display/entry units</div><div class="line">    v   verify the partition table</div><div class="line">    w   write table to disk and exit</div><div class="line">    x   extra functionality (experts only)</div></pre></td></tr></table></figure></p>
+<p>常用的输入:<br>        p: 显示已有分区<br>        n: 创建<br>        d: 删除<br>        w: 保存<br>        q: 退出<br>        l: 列出可用的分区类型，类型很重要，比如swap只能用82类型的分区；<br>创建一个分区：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Command (m for help): n    &lt;---n表示创建新分区</div><div class="line">Command action</div><div class="line">    e   extended</div><div class="line">    p   primary partition (1-4)</div><div class="line">    p    &lt;---表示创建主分区，e表示创建扩展分区</div><div class="line">    Partition number (1-4): 1    &lt;---输入主分区号，第一个则输入1</div><div class="line">    First cylinder (1-2610, default 1):     &lt;---输入分区开始的磁柱，直接回车按默认即可</div><div class="line">    Using default value 1</div><div class="line">    Last cylinder, +cylinders or +size&#123;K,M,G&#125; (1-2610, default 2610): +2G    &lt;---输入结束的磁柱，也可输入大小，比+2G或者+2000M。回车即创建完成。</div></pre></td></tr></table></figure>
+<p>创建扩展分区与创建主分区步骤相同；</p>
+<p>在扩展分区下创建一个逻辑分区：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Command (m for help): n</div><div class="line">Command action</div><div class="line">   l   logical (5 or over)    &lt;---注意逻辑分区号是从5开始的。</div><div class="line">   p   primary partition (1-4)</div><div class="line">l    &lt;---l（L的小写）表示逻辑分区</div><div class="line">First cylinder (525-1830, default 525):</div><div class="line">Using default value 525</div><div class="line">Last cylinder, +cylinders or +size&#123;K,M,G&#125; (525-1830, default 1830): +5G</div></pre></td></tr></table></figure></p>
+<p>创建逻辑分区与创建主分区过程基本相同，只是创建逻辑分区不需要输入分区号。<br>切记，操作完成退出前别忘了输入w执行保存分区信息，否则分区失败，也就是没有分区；<br>最后输入q，退出fdisk命令。<br>更多fdisk用法请自行man。</p>
+<p>分区完成可以在shell中使用 fdisk -l 查看或者 cat /proc/partitions 查看。<br>若 cat /proc/partitions 后没有显示新建的分区，可以使用partx命令让内核重新读取分区信息：<br>    partx -a /dev/sdb;<br>          -a表示add；<br>          更多partx用法请自行man。</p>
+<p>创建分区后还是不能立即使用的，因为还要通过格式化和挂载才能使用，我们就先来看下怎么格式化分区吧；<br>格式化就是把分区格式化成特定的文件系统；<br>Linux支持的文件系统有：ext2, ext3, ext4, xfs, btrfs, reiserfs, jfs, swap；<br>其中ext2和VFAT为非日志文件系统，其余全部为日志文件系统；日志文件系统较为先进，稳定性较好。<br>    还有两个特殊的：<br>        swap内存交换分区，用于存放内存交换页面文件；<br>        Linux的虚拟文件系统: VFS，用于虚拟所有的文件系统，给用户提供统一的接口。<br>为什么需要文件系统呢？<br>文件系统是为方便操作系统对分区的管理而对空间进行的一系列规划整理，打个比方，你要做一个书架，你是不是要好好的划分下书架的空间以便于更好管理书架并放置更多的书呢？<br>ext系列文件系统在分区中是以如下方式组织分区空间的：</p>
+<p>格式化分区的具体命令有mkfs，mke2fs，用法如下：</p>
+<pre><code>1. mkfs.FS_TYPE OPTION DEVICE 或者 mkfs -t FS_TYPE DEVICE
+                有用OPTION：
+                        -L &apos;LABEL&apos; 添加lable
+                注：FS_TYPE为ext2, ext3, ext4, xfs, btrfs, reiserfs, jfs, swap等文件系统名称。
+
+2. mke2fs OPTION DEVICE_NAME，DEVICE_NAME指分区名称
+        OPTION:
+            -t {ext2|ext3|ext4}
+            -b {1024|2048|4096} 设置存储基本单元block的大小
+            -L &apos;LABLE&apos; 用于设置分区的LABEL
+            -j 相当于-t ext3, 即使用日志功能
+            -i #: 为数据空间中每多少个字节创建一个inode, 此大小不应该小于block的大小，
+                            否则inode的数量将比block还多。。。。。。
+            -N #: 为数据空间创建多少个inode
+            -m #: 为管理人员预留的空间占据的百分比. 默认是5, 即5%
+            -O FEATURE[,…] 启用指定特性
+            -O ^FEATURE[,…] 关闭指定特性
+            注：mkfs.ext3 = mkfs -t ext3 = mke2fs -j = mke2fs -t ext3
+</code></pre><p>其他常用命令：</p>
+<pre><code>1. blkid 分区: 显示分区信息
+    或者：
+    blkid -U UUID 根据UUID查找设备
+    blkid -L LABEL 根据LABEL查找设备
+
+2. e2lable DEVICE [LABEL]，查看或设定LABEL
+3. tune2fs OPTION DEVICE_NAME: 重新设定ext系统文件系统可调整参数的值
+    OPTION：
+        -l 查看超级块信息
+        -L &apos;LABEL&apos; 设定LABEL
+        -m # 修改预留给管理人员的空间百分比
+        -j: 打开日志功能, 将ext2 升级为ext3
+        -O 文件系统属性启用或禁用
+        -o 指定默认挂载选项
+4. dumpe2fs OPTION DEVICE_NAME: 输出DEVICE的信息
+    OPTION：
+        -h: 查看超级块信息
+5. mkswap: 创建交换空间
+    用法：mkswap [OPTION] DEVICE
+    注意：前提调整DEVICE类型为82，可用类型可以通过fdisk DEVICE然后输入l查看。
+</code></pre><p>文件系统监测与修复命令:<br>    1.fsck: file system check的简写，用法如下：<br>        fsck.FS_TYPE 或 fsck -t FS_TYPE<br>            FS_TYPE 一定要与分区实际的文件系统类型对应<br>            OPTION：<br>                -a 自动修改错误<br>                -r 交互式修复错误<br>                e2fsck: ext系列文件系统专用<br>                -y 自动回答为yes<br>                -f 强制修复</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/26/爬取糗事百科的Python脚本/" rel="next" title="爬取糗事百科的Python脚本">
+                <i class="fa fa-chevron-left"></i> 爬取糗事百科的Python脚本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">王一川</p>
+            <p class="site-description motion-element" itemprop="description">iipirate.github.io</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王一川</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
