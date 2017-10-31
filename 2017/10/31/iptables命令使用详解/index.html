@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="iptables的主要功能是实现对网络数据包进出设备及转发的控制。当数据包需要进入设备、从设备中流出或者经该设备转发、路由时，都可以使用iptables进行控制。 环境 操作系统：CentOS7.3 ip地址：172.16.55.7 1.iptables中的四表五链及堵通策略A.四表是指，iptables的功能filter, nat, mangle, raw.　　　　filter, 控制数据包是否">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iptables命令使用详解">
+<meta property="og:url" content="http://yoursite.com/2017/10/31/iptables命令使用详解/index.html">
+<meta property="og:site_name" content="王一川的博客">
+<meta property="og:description" content="iptables的主要功能是实现对网络数据包进出设备及转发的控制。当数据包需要进入设备、从设备中流出或者经该设备转发、路由时，都可以使用iptables进行控制。 环境 操作系统：CentOS7.3 ip地址：172.16.55.7 1.iptables中的四表五链及堵通策略A.四表是指，iptables的功能filter, nat, mangle, raw.　　　　filter, 控制数据包是否">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-31T12:45:38.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iptables命令使用详解">
+<meta name="twitter:description" content="iptables的主要功能是实现对网络数据包进出设备及转发的控制。当数据包需要进入设备、从设备中流出或者经该设备转发、路由时，都可以使用iptables进行控制。 环境 操作系统：CentOS7.3 ip地址：172.16.55.7 1.iptables中的四表五链及堵通策略A.四表是指，iptables的功能filter, nat, mangle, raw.　　　　filter, 控制数据包是否">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/31/iptables命令使用详解/"/>
+
+
+
+
+
+  <title>iptables命令使用详解 | 王一川的博客</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王一川的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">iipirate</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/31/iptables命令使用详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王一川">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王一川的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iptables命令使用详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-31T20:41:10+08:00">
+                2017-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>iptables的主要功能是实现对网络数据包进出设备及转发的控制。当数据包需要进入设备、从设备中流出或者经该设备转发、路由时，都可以使用iptables进行控制。</p>
+<p>环境</p>
+<p>操作系统：CentOS7.3</p>
+<p>ip地址：172.16.55.7</p>
+<h3 id="1-iptables中的四表五链及堵通策略"><a href="#1-iptables中的四表五链及堵通策略" class="headerlink" title="1.iptables中的四表五链及堵通策略"></a>1.iptables中的四表五链及堵通策略</h3><h5 id="A-四表是指，iptables的功能filter-nat-mangle-raw"><a href="#A-四表是指，iptables的功能filter-nat-mangle-raw" class="headerlink" title="A.四表是指，iptables的功能filter, nat, mangle, raw."></a>A.四表是指，iptables的功能filter, nat, mangle, raw.</h5><p>　　　　filter, 控制数据包是否允许进出及转发（INPUT、OUTPUT、FORWARD）,可以控制的链路有input, forward, output</p>
+<p>　　　　nat, 控制数据包中地址转换，可以控制的链路有prerouting, input, output, postrouting</p>
+<p>　　　　mangle,修改数据包中的原数据，可以控制的链路有prerouting, input, forward, output, postrouting</p>
+<p>　　　　raw,控制nat表中连接追踪机制的启用状况，可以控制的链路有prerouting, output</p>
+<p>　　注：在centos7中，还有security表，不过这里不作介绍</p>
+<h5 id="B-五链是指内核中控制网络的NetFilter定义的五个规则链，分别为"><a href="#B-五链是指内核中控制网络的NetFilter定义的五个规则链，分别为" class="headerlink" title="B.五链是指内核中控制网络的NetFilter定义的五个规则链，分别为"></a>B.五链是指内核中控制网络的NetFilter定义的五个规则链，分别为</h5><p>　　　　PREROUTING, 路由前</p>
+<p>　　　　INPUT, 数据包流入口</p>
+<p>　　　　FORWARD, 转发管卡</p>
+<p>　　　　OUTPUT, 数据包出口</p>
+<p>　　　　POSTROUTING, 路由后</p>
+<h5 id="C-堵通策略是指对数据包所做的操作，一般有两种操作——“通（ACCEPT）”、“堵（DROP）”，还有一种操作很常见REJECT"><a href="#C-堵通策略是指对数据包所做的操作，一般有两种操作——“通（ACCEPT）”、“堵（DROP）”，还有一种操作很常见REJECT" class="headerlink" title="C.堵通策略是指对数据包所做的操作，一般有两种操作——“通（ACCEPT）”、“堵（DROP）”，还有一种操作很常见REJECT."></a>C.堵通策略是指对数据包所做的操作，一般有两种操作——“通（ACCEPT）”、“堵（DROP）”，还有一种操作很常见REJECT.</h5><p>谈谈REJECT和DROP之间的区别，Ming写了一封信，向Rose示爱。Rose如果不愿意接受，她可以不回应Ming,这个时候Ming不确定Rose是否接到了信；Rose也可以同样写一封信，在信中明确地拒绝Ming。前一种操作就如同执行了DROP操作，而后一种操作就如同REJECT操作。</p>
+<h3 id="2-iptables命令的语法规则"><a href="#2-iptables命令的语法规则" class="headerlink" title="2.iptables命令的语法规则"></a>2.iptables命令的语法规则</h3><p>iptables [-t table] COMMAND [chain] CRETIRIA -j ACTION<br>　　-t table，是指操作的表，filter、nat、mangle或raw, 默认使用filter</p>
+<p>　　COMMAND，子命令，定义对规则的管理</p>
+<p>　　chain, 指明链路</p>
+<p>　　CRETIRIA, 匹配的条件或标准</p>
+<p>　　ACTION,操作动作</p>
+<p>　　例如，不允许10.8.0.0/16网络对80/tcp端口进行访问，</p>
+<p>iptables -A INPUT -s 10.8.0.0/16 -d 172.16.55.7 -p tcp –dport 80 -j DROP<br>　　查看iptables列表</p>
+<p>iptables -nL</p>
+<h3 id="3-链管理"><a href="#3-链管理" class="headerlink" title="3.链管理"></a>3.链管理</h3><p>　　-N, –new-chain chain：新建一个自定义的规则链；</p>
+<p>　　-X, –delete-chain [chain]：删除用户自定义的引用计数为0的空链；</p>
+<p>　　-F, –flush [chain]：清空指定的规则链上的规则；</p>
+<p>　　-E, –rename-chain old-chain new-chain：重命名链；</p>
+<p>　　-Z, –zero [chain [rulenum]]：置零计数器；　　</p>
+<p>　　-P, –policy chain target， 设置链路的默认策略</p>
+<h3 id="4-规则管理"><a href="#4-规则管理" class="headerlink" title="4.规则管理"></a>4.规则管理</h3><p>　　-A, –append chain rule-specification：追加新规则于指定链的尾部；</p>
+<p>　　-I, –insert chain [rulenum] rule-specification：插入新规则于指定链的指定位置，默认为首部；</p>
+<p>　　-R, –replace chain rulenum rule-specification：替换指定的规则为新的规则；</p>
+<p>　　-D, –delete chain rulenum：根据规则编号删除规则；</p>
+<h3 id="5-查看规则"><a href="#5-查看规则" class="headerlink" title="5.查看规则　"></a>5.查看规则　</h3><p>　　-L, –list [chain]：列出规则；</p>
+<p>　　-v, –verbose：详细信息；</p>
+<p>　　　　-vv， -vvv  更加详细的信息</p>
+<p>　　-n, –numeric：数字格式显示主机地址和端口号；</p>
+<p>　　-x, –exact：显示计数器的精确值；</p>
+<p>　　–line-numbers：列出规则时，显示其在链上的相应的编号；</p>
+<p>　　-S, –list-rules [chain]：显示指定链的所有规则；</p>
+<p>　　查看规则的一般内容：</p>
+<p>　　</p>
+<h3 id="6-匹配条件"><a href="#6-匹配条件" class="headerlink" title="6.匹配条件"></a>6.匹配条件</h3><p>匹配条件包括通用匹配条件和扩展匹配条件。</p>
+<p>通用匹配条件是指针对源地址、目标地址的匹配，包括单一源IP、单一源端口、单一目标IP、单一目标端口、数据包流经的网卡以及协议。</p>
+<p>扩展匹配条件指通用匹配之外的匹配条件。</p>
+<p>6.1通用匹配条件</p>
+<p>[!] -s, –source address[/mask][,…]：检查报文的源IP地址是否符合此处指定的范围，或是否等于此处给定的地址；</p>
+<p>[!] -d, –destination address[/mask][,…]：检查报文的目标IP地址是否符合此处指定的范围，或是否等于此处给定的地址；</p>
+<p>[!] -p, –protocol protocol：匹配报文中的协议，可用值tcp, udp, udplite, icmp, icmpv6,esp, ah, sctp, mh 或者 “all”, 亦可以数字格式指明协议；<br>[!] -i, –in-interface name：限定报文仅能够从指定的接口流入；only for packets entering the INPUT, FORWARD and PREROUTING chains.</p>
+<p>[!] -o, –out-interface name：限定报文仅能够从指定的接口流出；for packets entering the FORWARD, OUTPUT and POSTROUTING chains.</p>
+<p>6.2扩展匹配条件</p>
+<p>隐含扩展匹配条件<br>-p tcp：可直接使用tcp扩展模块的专用选项；<br>　　[!] –source-port,–sport port[:port] 匹配报文源端口；可以给出多个端口，但只能是连续的端口范围 ；</p>
+<p>　　[!] –destination-port,–dport port[:port] 匹配报文目标端口；可以给出多个端口，但只能是连续的端口范围 ；</p>
+<p>　　[!] –tcp-flags mask comp 匹配报文中的tcp协议的标志位；Flags are: SYN ACK FIN RST URG PSH ALL NONE；<br>　　　　mask：要检查的FLAGS list，以逗号分隔；<br>　　　　comp：在mask给定的诸多的FLAGS中，其值必须为1的FLAGS列表，余下的其值必须为0；</p>
+<p>　　[!] –syn： –tcp-flags SYN,ACK,FIN,RST SYN</p>
+<p>-p udp：可直接使用udp协议扩展模块的专用选项：</p>
+<p>　　[!] –source-port,–sport port[:port]</p>
+<p>　　[!] –destination-port,–dport port[:port]</p>
+<p>-p icmp<br>　　[!] –icmp-type {type[/code]|typename}</p>
+<p>　　　　0/0：echo reply</p>
+<p>　　　　8/0：echo request</p>
+<p>显式扩展匹配条件<br>　　必须用-m option选项指定扩展匹配的类型，常见的有以下几种，</p>
+<p>1、multiport</p>
+<p>以离散或连续的 方式定义多端口匹配条件，最多15个；</p>
+<p>　　[!] –source-ports,–sports port[,port|,port:port]…：指定多个源端口；</p>
+<p>　　[!] –destination-ports,–dports port[,port|,port:port]…：指定多个目标端口；</p>
+<p>iptables -I INPUT -d 172.16.0.7 -p tcp -m multiport –dports 22,80,139,445,3306 -j ACCEPT</p>
+<p>2、iprange</p>
+<p>以连续地址块的方式来指明多IP地址匹配条件；</p>
+<p>　　[!] –src-range from[-to]</p>
+<p>　　[!] –dst-range from[-to]</p>
+<h1 id="iptables-I-INPUT-d-172-16-0-7-p-tcp-m-multiport-–dports-22-80-139-445-3306-m-iprange-–src-range-172-16-0-61-172-16-0-70-j-REJECT"><a href="#iptables-I-INPUT-d-172-16-0-7-p-tcp-m-multiport-–dports-22-80-139-445-3306-m-iprange-–src-range-172-16-0-61-172-16-0-70-j-REJECT" class="headerlink" title="iptables -I INPUT -d 172.16.0.7 -p tcp -m multiport –dports 22,80,139,445,3306 -m iprange –src-range 172.16.0.61-172.16.0.70 -j REJECT"></a>iptables -I INPUT -d 172.16.0.7 -p tcp -m multiport –dports 22,80,139,445,3306 -m iprange –src-range 172.16.0.61-172.16.0.70 -j REJECT</h1><p>3、time</p>
+<p>匹配数据包到达的时间</p>
+<p>　　–timestart hh:mm[:ss]</p>
+<p>　　–timestop hh:mm[:ss]</p>
+<p>　　[!] –weekdays day[,day…]</p>
+<p>　　[!] –monthdays day[,day…]</p>
+<p>　　–datestart YYYY[-MM[-DD[Thh[:mm[:ss]]]]]</p>
+<p>　　–datestop YYYY[-MM[-DD[Thh[:mm[:ss]]]]]</p>
+<p>　　–kerneltz：使用内核配置的时区而非默认的UTC；</p>
+<p>4、string<br>匹配数据包中的字符</p>
+<p>　　–algo {bm|kmp}</p>
+<p>　　[!] –string pattern</p>
+<p>　　[!] –hex-string pattern</p>
+<p>　　–from offset</p>
+<p>　　–to offset</p>
+<p>~]# iptables -I OUTPUT -m string –algo bm –string “gay” -j REJECT</p>
+<p>5、connlimit<br>用于限制同一IP可建立的连接数目</p>
+<p>　　–connlimit-upto n</p>
+<p>　　–connlimit-above n</p>
+<p>~]# iptables -I INPUT -d 172.16.0.7 -p tcp –syn –dport 22 -m connlimit –connlimit-above 2 -j REJECT</p>
+<p>6、limit<br>限制收发数据包的速率</p>
+<p>　　–limit rate[/second|/minute|/hour|/day]</p>
+<p>　　–limit-burst number</p>
+<p>~]# iptables -I OUTPUT -s 172.16.0.7 -p icmp –icmp-type 0 -j ACCEPT</p>
+<p>7、state<br>限制收发包的状态</p>
+<p>　　[!] –state state</p>
+<p>　　INVALID, ESTABLISHED, NEW, RELATED or UNTRACKED.</p>
+<p>　　NEW: 新连接请求；</p>
+<p>　　ESTABLISHED：已建立的连接；</p>
+<p>　　INVALID：无法识别的连接；</p>
+<p>　　RELATED：相关联的连接，当前连接是一个新请求，但附属于某个已存在的连接；</p>
+<p>　　UNTRACKED：未追踪的连接；</p>
+<p>state扩展：</p>
+<p>内核模块装载：<br>　　nf_conntrack<br>　　nf_conntrack_ipv4</p>
+<p>手动装载：<br>　　nf_conntrack_ftp</p>
+<p>追踪到的连接：<br>　　/proc/net/nf_conntrack</p>
+<p>调整可记录的连接数量最大值：<br>　　/proc/sys/net/nf_conntrack_max</p>
+<p>超时时长：<br>　　/proc/sys/net/netfilter/<em>timeout</em></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/30/磁盘管理命令/" rel="next" title="磁盘管理命令">
+                <i class="fa fa-chevron-left"></i> 磁盘管理命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">王一川</p>
+            <p class="site-description motion-element" itemprop="description">iipirate.github.io</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-iptables中的四表五链及堵通策略"><span class="nav-number">1.</span> <span class="nav-text">1.iptables中的四表五链及堵通策略</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#A-四表是指，iptables的功能filter-nat-mangle-raw"><span class="nav-number">1.0.1.</span> <span class="nav-text">A.四表是指，iptables的功能filter, nat, mangle, raw.</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#B-五链是指内核中控制网络的NetFilter定义的五个规则链，分别为"><span class="nav-number">1.0.2.</span> <span class="nav-text">B.五链是指内核中控制网络的NetFilter定义的五个规则链，分别为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#C-堵通策略是指对数据包所做的操作，一般有两种操作——“通（ACCEPT）”、“堵（DROP）”，还有一种操作很常见REJECT"><span class="nav-number">1.0.3.</span> <span class="nav-text">C.堵通策略是指对数据包所做的操作，一般有两种操作——“通（ACCEPT）”、“堵（DROP）”，还有一种操作很常见REJECT.</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-iptables命令的语法规则"><span class="nav-number">2.</span> <span class="nav-text">2.iptables命令的语法规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-链管理"><span class="nav-number">3.</span> <span class="nav-text">3.链管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-规则管理"><span class="nav-number">4.</span> <span class="nav-text">4.规则管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-查看规则"><span class="nav-number">5.</span> <span class="nav-text">5.查看规则　</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-匹配条件"><span class="nav-number">6.</span> <span class="nav-text">6.匹配条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iptables-I-INPUT-d-172-16-0-7-p-tcp-m-multiport-–dports-22-80-139-445-3306-m-iprange-–src-range-172-16-0-61-172-16-0-70-j-REJECT"><span class="nav-number"></span> <span class="nav-text">iptables -I INPUT -d 172.16.0.7 -p tcp -m multiport –dports 22,80,139,445,3306 -m iprange –src-range 172.16.0.61-172.16.0.70 -j REJECT</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王一川</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
