@@ -462,7 +462,8 @@
 <p>以连续地址块的方式来指明多IP地址匹配条件；</p>
 <p>　　[!] –src-range from[-to]</p>
 <p>　　[!] –dst-range from[-to]</p>
-<h1 id="iptables-I-INPUT-d-172-16-0-7-p-tcp-m-multiport-–dports-22-80-139-445-3306-m-iprange-–src-range-172-16-0-61-172-16-0-70-j-REJECT"><a href="#iptables-I-INPUT-d-172-16-0-7-p-tcp-m-multiport-–dports-22-80-139-445-3306-m-iprange-–src-range-172-16-0-61-172-16-0-70-j-REJECT" class="headerlink" title="iptables -I INPUT -d 172.16.0.7 -p tcp -m multiport –dports 22,80,139,445,3306 -m iprange –src-range 172.16.0.61-172.16.0.70 -j REJECT"></a>iptables -I INPUT -d 172.16.0.7 -p tcp -m multiport –dports 22,80,139,445,3306 -m iprange –src-range 172.16.0.61-172.16.0.70 -j REJECT</h1><p>3、time</p>
+<p> iptables -I INPUT -d 172.16.0.7 -p tcp -m multiport –dports 22,80,139,445,3306 -m iprange –src-range 172.16.0.61-172.16.0.70 -j REJECT</p>
+<p>3、time</p>
 <p>匹配数据包到达的时间</p>
 <p>　　–timestart hh:mm[:ss]</p>
 <p>　　–timestop hh:mm[:ss]</p>
