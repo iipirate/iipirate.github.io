@@ -412,8 +412,8 @@
 <p>(?<text> [/x01-/x09/x0b/x0c/x0e-/x7f])<br>(?<quoted_pair> // (?&amp;text))</quoted_pair></text></p>
 <p>(?<qtext> (?&amp;NO_WS_CTL) | [/x21/x23-/x5b/x5d-/x7e])<br>(?<qcontent> (?&amp;qtext) | (?”ed_pair))<br>(?<quoted_string> (?&amp;CFWS)? (?&amp;DQUOTE) (?:(?&amp;FWS)? (?&amp;qcontent))*<br>(?&amp;FWS)? (?&amp;DQUOTE) (?&amp;CFWS)?)</quoted_string></qcontent></qtext></p>
 <p>(?<word> (?&amp;atom) | (?”ed_string))<br>(?<phrase> (?&amp;word)+)</phrase></word></p>
-<h1 id="Folding-white-space"><a href="#Folding-white-space" class="headerlink" title="Folding white space"></a>Folding white space</h1><p>(?<fws> (?: (?&amp;WSP)<em> (?&amp;CRLF))? (?&amp;WSP)+)<br>(?<ctext> (?&amp;NO_WS_CTL) | [/x21-/x27/x2a-/x5b/x5d-/x7e])<br>(?<ccontent> (?&amp;ctext) | (?”ed_pair) | (?&amp;comment))<br>(?<comment> /( (?: (?&amp;FWS)? (?&amp;ccontent))</comment></ccontent></ctext></em> (?&amp;FWS)? /) )<br>(?<cfws> (?: (?&amp;FWS)? (?&amp;comment))*<br>(?: (?:(?&amp;FWS)? (?&amp;comment)) | (?&amp;FWS)))</cfws></fws></p>
-<h1 id="No-whitespace-control"><a href="#No-whitespace-control" class="headerlink" title="No whitespace control"></a>No whitespace control</h1><p>(?<no_ws_ctl> [/x01-/x08/x0b/x0c/x0e-/x1f/x7f])</no_ws_ctl></p>
+<p>#Folding white space<br>(?<fws> (?: (?&amp;WSP)<em> (?&amp;CRLF))? (?&amp;WSP)+)<br>(?<ctext> (?&amp;NO_WS_CTL) | [/x21-/x27/x2a-/x5b/x5d-/x7e])<br>(?<ccontent> (?&amp;ctext) | (?”ed_pair) | (?&amp;comment))<br>(?<comment> /( (?: (?&amp;FWS)? (?&amp;ccontent))</comment></ccontent></ctext></em> (?&amp;FWS)? /) )<br>(?<cfws> (?: (?&amp;FWS)? (?&amp;comment))*<br>(?: (?:(?&amp;FWS)? (?&amp;comment)) | (?&amp;FWS)))</cfws></fws></p>
+<p>#No whitespace control<br>(?<no_ws_ctl> [/x01-/x08/x0b/x0c/x0e-/x1f/x7f])</no_ws_ctl></p>
 <p>(?<alpha> [A-Za-z])<br>(?<digit> [0-9])<br>(?<crlf> /x0d /x0a)<br>(?<dquote> “)<br>(?<wsp> [/x20/x09])<br>)</wsp></dquote></crlf></digit></alpha></p>
 <p>(?&amp;address)/x</p>
 <h3 id="Ruby-简单版"><a href="#Ruby-简单版" class="headerlink" title="Ruby (简单版)"></a>Ruby (简单版)</h3><p>Ruby 表示，其实人家还有个简单版本：</p>
