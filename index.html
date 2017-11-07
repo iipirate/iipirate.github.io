@@ -298,6 +298,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/07/各种验证邮件地址的正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王一川">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王一川的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/07/各种验证邮件地址的正则表达式/" itemprop="url">各种验证邮件地址的正则表达式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-07T20:13:50+08:00">
+                2017-11-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h5 id="用正则表达式验证邮件地址似乎是一件简单的事情，但是如果要完美的验证一个合规的邮件地址，其实也许很复杂。邮件地址的规范来自于-RFC-5322-。"><a href="#用正则表达式验证邮件地址似乎是一件简单的事情，但是如果要完美的验证一个合规的邮件地址，其实也许很复杂。邮件地址的规范来自于-RFC-5322-。" class="headerlink" title="用正则表达式验证邮件地址似乎是一件简单的事情，但是如果要完美的验证一个合规的邮件地址，其实也许很复杂。邮件地址的规范来自于 RFC 5322 。"></a>用正则表达式验证邮件地址似乎是一件简单的事情，但是如果要完美的验证一个合规的邮件地址，其实也许很复杂。邮件地址的规范来自于 RFC 5322 。</h5><h5 id="聊一聊-各种验证邮件地址的正则表达式聊一聊-各种验证邮件地址的正则表达式邮件地址的规范来自于-RFC-5322-。有一个网站-emailregex-com-专门列出各种编程语言下的验证邮件地址的正则表达式，其中很多正则表达式都是我听说过而从未见过的复杂——我想说，做这个网站的程序员是被邮件验证这件事伤害了多深啊！"><a href="#聊一聊-各种验证邮件地址的正则表达式聊一聊-各种验证邮件地址的正则表达式邮件地址的规范来自于-RFC-5322-。有一个网站-emailregex-com-专门列出各种编程语言下的验证邮件地址的正则表达式，其中很多正则表达式都是我听说过而从未见过的复杂——我想说，做这个网站的程序员是被邮件验证这件事伤害了多深啊！" class="headerlink" title="聊一聊 各种验证邮件地址的正则表达式聊一聊 各种验证邮件地址的正则表达式邮件地址的规范来自于 RFC 5322 。有一个网站 emailregex.com 专门列出各种编程语言下的验证邮件地址的正则表达式，其中很多正则表达式都是我听说过而从未见过的复杂——我想说，做这个网站的程序员是被邮件验证这件事伤害了多深啊！"></a>聊一聊 各种验证邮件地址的正则表达式聊一聊 各种验证邮件地址的正则表达式邮件地址的规范来自于 RFC 5322 。有一个网站 emailregex.com 专门列出各种编程语言下的验证邮件地址的正则表达式，其中很多正则表达式都是我听说过而从未见过的复杂——我想说，做这个网站的程序员是被邮件验证这件事伤害了多深啊！</h5><p>其实，在产品环境中，一般来说并不需要这么复杂的正则表达式来做到99.99%正确。一般来说，从执行效率和测试覆盖率来说，只需要一个简单的版本即可：</p>
+<p>/^[A-Z0-9._%+-]+@[A-Z0-9.-]+/.[A-Z]{2,4}$/i</p>
+<p>那么下面我们来看看这些更严谨、更复杂的正则表达式吧：<br>验证邮件地址的通用正则表达式（符合 RFC 5322 标准）</p>
+<p>(?:[a-z0-9!#$%&amp;’<em>+/=?^_`{|}~-]+(?:/.[a-z0-9!#$%&amp;’</em>+/=?^_`{|}~-]+)<em>|”(?:[/x01-/x08/x0b/x0c/x0e-/x1f/x21/x23-/x5b/x5d-/x7f]|//[/x01-/x09/x0b/x0c/x0e-/x7f])</em>“)@(?:(?:<a href="?:[a-z0-9-]*[a-z0-9]">a-z0-9</a>?/.)+<a href="?:[a-z0-9-]*[a-z0-9]">a-z0-9</a>?|/[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[/x01-/x08/x0b/x0c/x0e-/x1f/x21-/x5a/x53-/x7f]|//[/x01-/x09/x0b/x0c/x0e-/x7f])+)/])</p>
+<p>由于各种语言对正则表达式的支持不同、语法差异和覆盖率不同，所以，不同语言里面的正则表达式也不同：</p>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>这个是个简单的版本：</p>
+<p>r”(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+/.[a-zA-Z0-9-.]+$)”</p>
+<h3 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h3><p>这个有点复杂了：</p>
+<p>/^[-a-z0-9~!$%^&amp;<em>_=+}{/‘?]+(/.[-a-z0-9~!$%^&amp;</em>_=+}{/‘?]+)<em>@([a-z0-9_][-a-z0-9_]</em>(/.[-a-z0-9_]+)*/.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}/.[0-9]{1,3}/.[0-9]{1,3}/.[0-9]{1,3}))(:[0-9]{1,5})?$/i</p>
+<h3 id="Swift"><a href="#Swift" class="headerlink" title="Swift"></a>Swift</h3><p>[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+//.[A-Za-z]{2,6}</p>
+<h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><p>PHP 的这个版本就更复杂了，覆盖率就更大一些：</p>
+<p>/^(?!(?:(?:/x22?/x5C[/x00-/x7E]/x22?)|(?:/x22?[^/x5C/x22]/x22?)){255,})(?!(?:(?:/x22?/x5C[/x00-/x7E]/x22?)|(?:/x22?[^/x5C/x22]/x22?)){65,}@)(?:(?:[/x21/x23-/x27/x2A/x2B/x2D/x2F-/x39/x3D/x3F/x5E-/x7E]+)|(?:/x22(?:[/x01-/x08/x0B/x0C/x0E-/x1F/x21/x23-/x5B/x5D-/x7F]|(?:/x5C[/x00-/x7F]))<em>/x22))(?:/.(?:(?:[/x21/x23-/x27/x2A/x2B/x2D/x2F-/x39/x3D/x3F/x5E-/x7E]+)|(?:/x22(?:[/x01-/x08/x0B/x0C/x0E-/x1F/x21/x23-/x5B/x5D-/x7F]|(?:/x5C[/x00-/x7F]))</em>/x22)))<em>@(?:(?:(?!.</em>[^.]{64,})(?:(?:(?:xn–)?[a-z0-9]+(?:-[a-z0-9]+)<em>/.){1,126}){1,}(?:(?:[a-z][a-z0-9]</em>)|(?:(?:xn–)[a-z0-9]+))(?:-[a-z0-9]+)<em>)|(?:/[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.</em>[a-f0-9][:/]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:/.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))/]))$/iD</p>
+<h3 id="Perl-Ruby"><a href="#Perl-Ruby" class="headerlink" title="Perl / Ruby"></a>Perl / Ruby</h3><p>对与 PHP 的版本，Perl 和 Ruby 表示不服，可以更严谨：</p>
+<p>(?:(?:/r/n)?[ /t])<em>(?:(?:(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))</em>“(?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[/t]))<em>“(?:(?:/r/n)?[ /t])</em>))<em>@(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>|(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>)<em>/&lt;(?:(?:/r/n)?[ /t])</em>(?:@(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[/t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>(?:,@(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[/t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/[([^/[/]/r//]|//.)</em>/](?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>)<em>:(?:(?:/r/n)?[ /t])</em>)?(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>)(?:/.(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))</em>“(?:(?:/r/n)?[ /t])<em>))</em>@(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/[([^/[/]/r//]|//.)</em>/](?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>/&gt;(?:(?:/r/n)?[ /t])<em>)|(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))</em>“(?:(?:/r/n)?[ /t])<em>)</em>:(?:(?:/r/n)?[ /t])<em>(?:(?:(?:[^()&lt;&gt;@,;://“./[/]/000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))</em>“(?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>))<em>@(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>|(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>)<em>/&lt;(?:(?:/r/n)?[ /t])</em>(?:@(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>(?:,@(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/[([^/[/]/r//]|//.)</em>/](?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/]/000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>)<em>:(?:(?:/r/n)?[ /t])</em>)?(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>)(?:/.(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))</em>“(?:(?:/r/n)?[ /t])<em>))</em>@(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/[([^/[/]/r//]|//.)</em>/](?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>/&gt;(?:(?:/r/n)?[ /t])<em>)(?:,/s</em>(?:(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>)(?:/.(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))</em>“(?:(?:/r/n)?[ /t])<em>))</em>@(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/[([^/[/]/r//]|//.)</em>/](?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>|(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>)<em>/&lt;(?:(?:/r/n)?[ /t])</em>(?:@(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>(?:,@(?:(?:/r/n)?[/t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/[([^/[/]/r//]|//.)</em>/](?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>)<em>:(?:(?:/r/n)?[ /t])</em>)?(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))<em>“(?:(?:/r/n)?[ /t])</em>)(?:/.(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|”(?:[^/“/r//]|//.|(?:(?:/r/n)?[ /t]))</em>“(?:(?:/r/n)?[ /t])<em>))</em>@(?:(?:/r/n)?[ /t])<em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/[([^/[/]/r//]|//.)</em>/](?:(?:/r/n)?[ /t])<em>)(?:/.(?:(?:/r/n)?[ /t])</em>(?:[^()&lt;&gt;@,;://“./[/] /000-/031]+(?:(?:(?:/r/n)?[ /t])+|/Z|(?=[/[“()&lt;&gt;@,;://“./[/]]))|/<a href="?:(?:/r/n">([^/[/]/r//]|//.)*/</a>?[ /t])<em>))</em>/&gt;(?:(?:/r/n)?[ /t])<em>))</em>)?;/s</p>
+<h3 id="Perl-5-10-及以后版本"><a href="#Perl-5-10-及以后版本" class="headerlink" title="Perl 5.10 及以后版本"></a>Perl 5.10 及以后版本</h3><p>上面的版本，嗯，我可以说是天书吗？反正我是没有解读的想法了。当然，新版本的 Perl 语言还有一个更易读的版本（你是说真的么？）</p>
+<p>/(?(DEFINE)<br>(?<address> (?&amp;mailbox) | (?&amp;group))<br>(?<mailbox> (?&amp;name_addr) | (?&amp;addr_spec))<br>(?<name_addr> (?&amp;display_name)? (?&amp;angle_addr))<br>(?<angle_addr> (?&amp;CFWS)? &lt; (?&amp;addr_spec) &gt; (?&amp;CFWS)?)<br>(?<group> (?&amp;display_name) : (?:(?&amp;mailbox_list) | (?&amp;CFWS))? ;<br>(?&amp;CFWS)?)<br>(?<display_name> (?&amp;phrase))<br>(?<mailbox_list> (?&amp;mailbox) (?: , (?&amp;mailbox))*)</mailbox_list></display_name></group></angle_addr></name_addr></mailbox></address></p>
+<p>(?<addr_spec> (?&amp;local_part) /@ (?&amp;domain))<br>(?<local_part> (?&amp;dot_atom) | (?”ed_string))<br>(?<domain> (?&amp;dot_atom) | (?&amp;domain_literal))<br>(?<domain_literal> (?&amp;CFWS)? /[ (?: (?&amp;FWS)? (?&amp;dcontent))* (?&amp;FWS)?<br>/] (?&amp;CFWS)?)<br>(?<dcontent> (?&amp;dtext) | (?”ed_pair))<br>(?<dtext> (?&amp;NO_WS_CTL) | [/x21-/x5a/x5e-/x7e])</dtext></dcontent></domain_literal></domain></local_part></addr_spec></p>
+<p>(?<atext> (?&amp;ALPHA) | (?&amp;DIGIT) | [!#/$%&amp;’<em>+-/=?^_`{|}~])<br>(?<atom> (?&amp;CFWS)? (?&amp;atext)+ (?&amp;CFWS)?)<br>(?<dot_atom> (?&amp;CFWS)? (?&amp;dot_atom_text) (?&amp;CFWS)?)<br>(?<dot_atom_text> (?&amp;atext)+ (?: /. (?&amp;atext)+)</dot_atom_text></dot_atom></atom></em>)</atext></p>
+<p>(?<text> [/x01-/x09/x0b/x0c/x0e-/x7f])<br>(?<quoted_pair> // (?&amp;text))</quoted_pair></text></p>
+<p>(?<qtext> (?&amp;NO_WS_CTL) | [/x21/x23-/x5b/x5d-/x7e])<br>(?<qcontent> (?&amp;qtext) | (?”ed_pair))<br>(?<quoted_string> (?&amp;CFWS)? (?&amp;DQUOTE) (?:(?&amp;FWS)? (?&amp;qcontent))*<br>(?&amp;FWS)? (?&amp;DQUOTE) (?&amp;CFWS)?)</quoted_string></qcontent></qtext></p>
+<p>(?<word> (?&amp;atom) | (?”ed_string))<br>(?<phrase> (?&amp;word)+)</phrase></word></p>
+<h1 id="Folding-white-space"><a href="#Folding-white-space" class="headerlink" title="Folding white space"></a>Folding white space</h1><p>(?<fws> (?: (?&amp;WSP)<em> (?&amp;CRLF))? (?&amp;WSP)+)<br>(?<ctext> (?&amp;NO_WS_CTL) | [/x21-/x27/x2a-/x5b/x5d-/x7e])<br>(?<ccontent> (?&amp;ctext) | (?”ed_pair) | (?&amp;comment))<br>(?<comment> /( (?: (?&amp;FWS)? (?&amp;ccontent))</comment></ccontent></ctext></em> (?&amp;FWS)? /) )<br>(?<cfws> (?: (?&amp;FWS)? (?&amp;comment))*<br>(?: (?:(?&amp;FWS)? (?&amp;comment)) | (?&amp;FWS)))</cfws></fws></p>
+<h1 id="No-whitespace-control"><a href="#No-whitespace-control" class="headerlink" title="No whitespace control"></a>No whitespace control</h1><p>(?<no_ws_ctl> [/x01-/x08/x0b/x0c/x0e-/x1f/x7f])</no_ws_ctl></p>
+<p>(?<alpha> [A-Za-z])<br>(?<digit> [0-9])<br>(?<crlf> /x0d /x0a)<br>(?<dquote> “)<br>(?<wsp> [/x20/x09])<br>)</wsp></dquote></crlf></digit></alpha></p>
+<p>(?&amp;address)/x</p>
+<h3 id="Ruby-简单版"><a href="#Ruby-简单版" class="headerlink" title="Ruby (简单版)"></a>Ruby (简单版)</h3><p>Ruby 表示，其实人家还有个简单版本：</p>
+<p>//A([/w+/-].?)+@[a-z/d/-]+(/.[a-z]+)*/.[a-z]+/z/i</p>
+<h3 id="NET"><a href="#NET" class="headerlink" title=".NET"></a>.NET</h3><p>这样的版本谁没有啊——.NET 说：</p>
+<p>^/w+([-+.’]/w+)<em>@/w+([-.]/w+)</em>/./w+([-.]/w+)*$</p>
+<h3 id="grep-命令"><a href="#grep-命令" class="headerlink" title="grep 命令"></a>grep 命令</h3><p>用 grep 命令在文件中查找邮件地址，我想你不会写个若干行的正则表达式吧，意思一下就行了：</p>
+<p>$ grep -E -o “/b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.[A-Za-z]{2,6}/b” filename.txt</p>
+<h3 id="SQL-Server"><a href="#SQL-Server" class="headerlink" title="SQL Server"></a>SQL Server</h3><p>在 SQL Server 中也是可以用正则表达式的，不过这个代码片段应该是来自某个产品环境中的，所以，还体贴的照顾了那些把邮件地址写错的人：</p>
+<p>select email<br>from table_name where<br>patindex (‘%[ &amp;’’,”:;!+=//()&lt;&gt;]%’, email) &gt; 0 – Invalid characters<br>or patindex (‘[@.-_]%’, email) &gt; 0 – Valid but cannot be starting character<br>or patindex (‘%[@.-_]’, email) &gt; 0 – Valid but cannot be ending character<br>or email not like ‘%@%.%’ – Must contain at least one @ and one .<br>or email like ‘%..%’ – Cannot have two periods in a row<br>or email like ‘%@%@%’ – Cannot have two @ anywhere<br>or email like ‘%.@%’ or email like ‘%@.%’ – Cannot have @ and . next to each other<br>or email like ‘%.cm’ or email like ‘%.co’ – Camaroon or Colombia? Typos.<br>or email like ‘%.or’ or email like ‘%.ne’ – Missing last letter</p>
+<h3 id="Oracle-PL-SQL"><a href="#Oracle-PL-SQL" class="headerlink" title="Oracle PL/SQL"></a>Oracle PL/SQL</h3><p>这个是不是有点偷懒？尤其是在那些“复杂”的正则表达式之后：</p>
+<p>SELECT email<br>FROM table_name<br>WHERE REGEXP_LIKE (email, ‘[A-Z0-9._%-]+@[A-Z0-9._%-]+/.[A-Z]{2,4}’);</p>
+<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><p>好吧，看来最后也一样懒：</p>
+<p>SELECT * FROM <code>users</code> WHERE <code>email</code> NOT REGEXP ‘^[A-Z0-9._%-]+@[A-Z0-9.-]+/.[A-Z]{2,4}$’;</p>
+<p>那么，你有没有关于验证邮件地址的正则表达式分享给大家？</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/31/iptables命令使用详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1796,183 +1975,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/31/HTTP状态码（HTTP-Status-Code）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王一川">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王一川的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/31/HTTP状态码（HTTP-Status-Code）/" itemprop="url">HTTP状态码（HTTP Status Code）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-31T19:28:12+08:00">
-                2017-08-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="一些常见的状态码为："><a href="#一些常见的状态码为：" class="headerlink" title="一些常见的状态码为："></a>一些常见的状态码为：</h1><h2 id="一些常见的状态码为：-1"><a href="#一些常见的状态码为：-1" class="headerlink" title="一些常见的状态码为："></a>一些常见的状态码为：</h2><p>   200 - 服务器成功返回网页<br>   404 - 请求的网页不存在<br>   503 - 服务不可用</p>
-<h2 id="所有状态解释："><a href="#所有状态解释：" class="headerlink" title="所有状态解释："></a>所有状态解释：</h2><blockquote>
-<p>1xx（临时响应）<br>表示临时响应并需要请求者继续执行操作的状态代码。<br>代码 说明</p>
-</blockquote>
-<p>100 （继续） 请求者应当继续提出请求。 服务器返回此代码表示已收到请求的第一部分，正在等待其余部分。</p>
-<p>101 （切换协议） 请求者已要求服务器切换协议，服务器已确认并准备切换。</p>
-<blockquote>
-<p>2xx （成功）<br>表示成功处理了请求的状态代码。<br>代码 说明</p>
-</blockquote>
-<p>200 （成功） 服务器已成功处理了请求。 通常，这表示服务器提供了请求的网页。</p>
-<p>201 （已创建） 请求成功并且服务器创建了新的资源。</p>
-<p>202 （已接受） 服务器已接受请求，但尚未处理。</p>
-<blockquote>
-<p>3xx （重定向）<br>表示要完成请求，需要进一步操作。 通常，这些状态代码用来重定向。<br>代码 说明</p>
-</blockquote>
-<p>300 （多种选择） 针对请求，服务器可执行多种操作。 服务器可根据请求者 (user agent) 选择一项操作，或提供操作列表供请求者选择。</p>
-<p>301 （永久移动） 请求的网页已永久移动到新位置。 服务器返回此响应（对 GET 或 HEAD 请求的响应）时，会自动将请求者转到新位置。</p>
-<p>302 （临时移动） 服务器目前从不同位置的网页响应请求，但请求者应继续使用原有位置来进行以后的请求。</p>
-<p>303 （查看其他位置） 请求者应当对不同的位置使用单独的 GET 请求来检索响应时，服务器返回此代码。</p>
-<p>304 （未修改） 自从上次请求后，请求的网页未修改过。 服务器返回此响应时，不会返回网页内容。</p>
-<blockquote>
-<p>4xx（请求错误）<br>这些状态代码表示请求可能出错，妨碍了服务器的处理。<br>代码 说明</p>
-</blockquote>
-<p>400 （错误请求） 服务器不理解请求的语法。</p>
-<p>401 （未授权） 请求要求身份验证。 对于需要登录的网页，服务器可能返回此响应。</p>
-<p>403 （禁止） 服务器拒绝请求。</p>
-<p>404 （未找到） 服务器找不到请求的网页。</p>
-<blockquote>
-<p>5xx（服务器错误）<br>这些状态代码表示服务器在尝试处理请求时发生内部错误。 这些错误可能是服务器本身的错误，而不是请求出错。<br>代码 说明</p>
-</blockquote>
-<p>500 （服务器内部错误） 服务器遇到错误，无法完成请求。</p>
-<p>501 （尚未实施） 服务器不具备完成请求的功能。 例如，服务器无法识别请求方法时可能会返回此代码。</p>
-<p>502 （错误网关） 服务器作为网关或代理，从上游服务器收到无效响应。</p>
-<p>503 （服务不可用） 服务器目前无法使用（由于超载或停机维护）。 通常，这只是暂时状态。</p>
-<p>504 （网关超时） 服务器作为网关或代理，但是没有及时从上游服务器收到请求。</p>
-<p>505 （HTTP 版本不受支持） 服务器不支持请求中所用的 HTTP 协议版本。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2022,7 +2024,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
